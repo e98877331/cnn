@@ -7,6 +7,7 @@
 package ntu.csie.wcmlab;
 
 
+import wcm.ytwhyc.ratiofixer.RatioFixer;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -238,7 +239,7 @@ public class ColorPickDialog extends Dialog {
         public void colorChanged(int color) {
         	mPaintToChange.setColor(color);
         	//send to remote
-            ((MyCanvas)(mSelf.mContext)).getSocket().send(new Commands.ChangeColorCmd(color,mPaintToChange.getStrokeWidth()));
+            ((MyCanvas)(mSelf.mContext)).getSocket().send(new Commands.ChangeColorCmd(color,mPaintToChange.getStrokeWidth()/RatioFixer.getRatio()));
         	mSelf.dismiss();
         }
     }

@@ -455,7 +455,7 @@ public class MySurfaceView extends View {
 			
 			Commands.ChangeColorCmd CCC = (Commands.ChangeColorCmd) cmd;
 			drawStateMap.get(cmd.getFrom()).getPaint().setColor(CCC.getColor());
-			drawStateMap.get(cmd.getFrom()).getPaint().setStrokeWidth(CCC.getWidth());
+			drawStateMap.get(cmd.getFrom()).getPaint().setStrokeWidth(CCC.getWidth()*RatioFixer.getRatio());
 			
 
 			break;
