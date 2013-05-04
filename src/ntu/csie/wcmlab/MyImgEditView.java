@@ -76,6 +76,13 @@ public class MyImgEditView extends View {
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 		//mBitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	}
+	public MyImgEditView(Context c) {
+		super(c);
+		mContext = c;	
+		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+		//mBitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	}
+	
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {

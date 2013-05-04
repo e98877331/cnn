@@ -3,9 +3,8 @@ package ntu.csie.wcmlab;
 
 import java.io.ByteArrayOutputStream;
 
-
-
-import android.app.Activity;
+import wcm.ytwhyc.ratiofixer.RatioActivity;
+import wcm.ytwhyc.ratiofixer.RatioFixer;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,7 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MyCanvas extends Activity{
+public class MyCanvas extends RatioActivity{
 
 	private MyCanvas mSelf;
 	public MySurfaceView mView;
@@ -60,9 +59,46 @@ public class MyCanvas extends Activity{
 	public static final int VIEWMODE_IMAGE_EDITING	= 5512;
 	
 	private void myFindViewByID(){
-		mView				= (MySurfaceView)	findViewById(R.id.mySurfaceView1);
-		mImageEditingView	= (MyImgEditView)	findViewById(R.id.myImgEditView);
-		loadedImage			= (ImageView)		findViewById(R.id.loadedImage);
+		mView				= new MySurfaceView(this);
+		mImageEditingView	= new MyImgEditView(this);
+		loadedImage			= new ImageView(this);
+		
+		mRL					= new RelativeLayout(this);
+		imgEdtOKBtn			= new Button(this);
+		imgEdtCancelBtn		= new Button(this);
+		
+		CcBtn				= new ImageButton(this);
+		eraserBtn			= new ImageButton(this);
+		undoBtn				= new ImageButton(this);
+		redoBtn				= new ImageButton(this);
+		clearBtn			= new ImageButton(this);
+		
+		loadedImage.setAlpha(225);
+	}
+	
+	private void setContentView()
+	{
+		getMainLayout().addView(mView,RatioFixer.getLayoutParam(768, 1230, 0, 0));
+		getMainLayout().addView(mImageEditingView,RatioFixer.getLayoutParam(768	, 1230, 0, 0));
+	//	getMainLayout().addView(mView,RatioFixer.getLayoutParam(153, 130, 0, 0));
+		
+		getMainLayout().addView(CcBtn,RatioFixer.getLayoutParam(153, 130, 0, 0));
+		getMainLayout().addView(eraserBtn,RatioFixer.getLayoutParam(153, 130, 153, 0));
+		getMainLayout().addView(undoBtn,RatioFixer.getLayoutParam(153, 130,306, 0));
+		getMainLayout().addView(redoBtn,RatioFixer.getLayoutParam(153, 130, 459, 0));
+		getMainLayout().addView(clearBtn,RatioFixer.getLayoutParam(153, 130, 612, 0));
+		
+		getMainLayout().addView(imgEdtOKBtn,RatioFixer.getLayoutParam(153, 130, 300, 1050));
+		getMainLayout().addView(imgEdtCancelBtn,RatioFixer.getLayoutParam(153, 130, 500, 1050));
+		
+		getMainLayout().addView(loadedImage,RatioFixer.getLayoutParam(300, 300, 200, 500));
+	}
+	
+	/*
+	 	private void myFindViewByID(){
+		mView				= new MySurfaceView(this);
+		mImageEditingView	= new MyImgEditView(this);
+		loadedImage			= new ImageView(this);
 		
 		mRL					= (RelativeLayout) 	findViewById(R.id.relativeLayout1);
 		imgEdtOKBtn			= (Button)			findViewById(R.id.bt_imgEdit_OK);
@@ -76,18 +112,37 @@ public class MyCanvas extends Activity{
 		
 		loadedImage.setAlpha(225);
 	}
+	 
+	 */
+	
 
 	private String remoteIP;
 	private ProgressDialog connectingDialog;
+	
+	
+	@Override
+	public void onLayoutCreated() {
+		// TODO Auto-generated method stub
+		super.onLayoutCreated();
+		myFindViewByID();
+		setContentView();
+		onCreateProcess();
+		
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.canvaslayout);
+	}
+	
+	
+	protected void onCreateProcess() {
+		// TODO Auto-generated method stub
+		//setContentView(R.layout.canvaslayout);
 		setRequestedOrientation(1);	//lock rotate
 		
-		myFindViewByID();
+		
 		setCanvasViewMode(VIEWMODE_CANVAS);
 		
 		mSelf = this;

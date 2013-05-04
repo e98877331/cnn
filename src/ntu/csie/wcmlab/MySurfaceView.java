@@ -109,6 +109,34 @@ public class MySurfaceView extends View {
 		
 		
 	}
+	
+	public MySurfaceView(Context c) {
+		super(c);
+		mContext = c;
+
+		mBufferDealer = new BufferDealer();
+		// mPaint = MyCanvas.mPaint;
+		mPaint = new Paint();
+		mPaint.setAntiAlias(true);
+		mPaint.setDither(true);
+		mPaint.setColor(0xFFFF0000);
+		mPaint.setStyle(Paint.Style.STROKE);
+		mPaint.setStrokeJoin(Paint.Join.ROUND);
+		mPaint.setStrokeCap(Paint.Cap.ROUND);
+		mPaint.setStrokeWidth(12);
+		mPath = new Path();
+		//path for receive from remote
+		mRemotePath = new Path();
+		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+		
+		
+		//drawStateMap.put
+		
+		
+		
+	}
+	
+	
 
 	public void setSocket(MySocket ms)
 	{
