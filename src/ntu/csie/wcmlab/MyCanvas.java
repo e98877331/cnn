@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,21 +60,38 @@ public class MyCanvas extends RatioActivity{
 	public static final int VIEWMODE_IMAGE_EDITING	= 5512;
 	
 	private void myFindViewByID(){
+		getMainLayout().setBackgroundColor(Color.WHITE);
+		
 		mView				= new MySurfaceView(this);
 		mImageEditingView	= new MyImgEditView(this);
 		loadedImage			= new ImageView(this);
 		
 		mRL					= new RelativeLayout(this);
 		imgEdtOKBtn			= new Button(this);
+	    imgEdtOKBtn.setText("Ok");
 		imgEdtCancelBtn		= new Button(this);
+		imgEdtCancelBtn.setText("Cancel");
 		
 		CcBtn				= new ImageButton(this);
+		initImageButton(CcBtn, R.drawable.bt_palette_128);
+		
 		eraserBtn			= new ImageButton(this);
+		initImageButton(eraserBtn, R.drawable.bt_eraser_128);
 		undoBtn				= new ImageButton(this);
+		initImageButton(undoBtn, R.drawable.bt_undo_128);
 		redoBtn				= new ImageButton(this);
+		initImageButton(redoBtn, R.drawable.bt_redo_128);
 		clearBtn			= new ImageButton(this);
+		initImageButton(clearBtn,R.drawable.bt_clear_128);
 		
 		loadedImage.setAlpha(225);
+	}
+	
+	private void initImageButton(ImageButton pIb,int imageResource)
+	{
+		pIb.setScaleType(ScaleType.FIT_XY);
+		pIb.setImageResource(imageResource);
+		pIb.setBackgroundColor(Color.TRANSPARENT);
 	}
 	
 	private void setContentView()

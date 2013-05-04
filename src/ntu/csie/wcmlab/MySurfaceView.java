@@ -88,6 +88,7 @@ public class MySurfaceView extends View {
 		super(c, attrs);
 		mContext = c;
 
+		
 		mBufferDealer = new BufferDealer();
 		// mPaint = MyCanvas.mPaint;
 		mPaint = new Paint();
