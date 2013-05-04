@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import wcm.ytwhyc.ratiofixer.RatioFixer;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -348,19 +350,21 @@ public class MySurfaceView extends View {
 		
 		float x = event.getX();
 		float y = event.getY();
+		float virtualX = x / RatioFixer.getRatio();
+		float virtualY = y / RatioFixer.getRatio();
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			mMySocket.send(new Commands.SendPointCmd(x, y, 1)); 	
+			mMySocket.send(new Commands.SendPointCmd(virtualX, virtualY, 1)); 	
 			touch_start(x, y,drawStateMap.get(mMySocket.idFromIP).getPath(),mMySocket.idFromIP); 
 			invalidate();
 			break;
 		case MotionEvent.ACTION_MOVE:
-			mMySocket.send(new Commands.SendPointCmd(x, y, 2)); 
+			mMySocket.send(new Commands.SendPointCmd(virtualX, virtualY, 2)); 
 			touch_move(x, y,drawStateMap.get(mMySocket.idFromIP).getPath(),mMySocket.idFromIP);
 			invalidate();
 			break;
 		case MotionEvent.ACTION_UP:
-			mMySocket.send(new Commands.SendPointCmd(x, y, 3)); 
+			mMySocket.send(new Commands.SendPointCmd(virtualX, virtualY, 3)); 
 			touch_up(drawStateMap.get(mMySocket.idFromIP).getPath(),mMySocket.idFromIP);
 			invalidate();
 			
@@ -415,15 +419,16 @@ public class MySurfaceView extends View {
 			
 			Path tempPath = drawStateMap.get(cmd.getFrom()).getPath();
 			
-	
+			float x = RatioFixer.getValue((int)Dpc.getX());
+			float y = RatioFixer.getValue((int)Dpc.getY());
 	
 			if(Dpc.getType() == 1)
 			{
-				touch_start(Dpc.getX(),Dpc.getY(),tempPath,Dpc.getFrom()); //ChengYan: pNumber = 1 means use remotePath#1's mX,mY 
+				touch_start(x,y,tempPath,Dpc.getFrom()); //ChengYan: pNumber = 1 means use remotePath#1's mX,mY 
 			}
 			else if(Dpc.getType() == 2)
 			{
-				touch_move(Dpc.getX(),Dpc.getY(),tempPath,Dpc.getFrom());
+				touch_move(x,y,tempPath,Dpc.getFrom());
 			}
 			else if(Dpc.getType() == 3)
 			{
