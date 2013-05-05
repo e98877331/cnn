@@ -397,9 +397,9 @@ public class MyCanvas extends RatioActivity{
 					
 						//ChengYan: send bitmap to remote
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
-						bg.compress(Bitmap.CompressFormat.JPEG, 80, out);
-						mView.getSocket().send(
-						new Commands.SendBitmapCmd(out.toByteArray()));
+						bg.compress(Bitmap.CompressFormat.JPEG, 100, out);
+						mView.getSocket().
+						send(new Commands.SendBitmapCmd(out.toByteArray()));
 						
 
 						bg.recycle();

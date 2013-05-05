@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -105,6 +106,9 @@ public class MySurfaceView extends View {
 		//path for receive from remote
 		mRemotePath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+		mBitmapPaint.setAntiAlias(true);
+		mBitmapPaint.setFilterBitmap(true);
+		mBitmapPaint.setDither(true);
 		
 		
 		//drawStateMap.put
@@ -478,6 +482,7 @@ public class MySurfaceView extends View {
 		case 6:
 			Commands.SendBitmapCmd SBC = (Commands.SendBitmapCmd) cmd;
 			Bitmap tempBmp = BitmapFactory.decodeByteArray(SBC.getBytearray(), 0, SBC.getBytearray().length);
+
 			//drawImgOntoCanvas(tempBmp);
 			
 			//Bitmap bmp = tempBmp.copy(Bitmap.Config.ARGB_8888, true);
@@ -491,11 +496,20 @@ public class MySurfaceView extends View {
 			tempBmp.getPixels(pixels, 0, mWidth, 0, 0, tempBmp.getWidth(), tempBmp.getHeight()); 
 			bmp.setPixels(pixels, 0, mWidth, 0, 0, tempBmp.getWidth(), tempBmp.getHeight());
 			*/
-            int tempWidth = mWidth <= tempBmp.getWidth() ?  mWidth : tempBmp.getWidth();
-            int tempHeight = mHeight <= tempBmp.getHeight() ? mHeight : tempBmp.getHeight();
-			tempBmp.getPixels(pixels, 0, mWidth, 0, 0, tempWidth, tempHeight);
 			
-			bmp.setPixels(pixels, 0, mWidth, 0, 0, tempWidth,tempHeight);
+			Rect rect   = new Rect();
+	        rect.left   = 0;    
+	        rect.right  = mWidth;
+	        rect.top    = 0;
+	        rect.bottom = mHeight;
+			Canvas drawCanvas = new Canvas(bmp);
+			drawCanvas.drawBitmap(tempBmp, null, rect, mBitmapPaint);
+			
+//            int tempWidth = mWidth <= tempBmp.getWidth() ?  mWidth : tempBmp.getWidth();
+//            int tempHeight = mHeight <= tempBmp.getHeight() ? mHeight : tempBmp.getHeight();
+//			tempBmp.getPixels(pixels, 0, mWidth, 0, 0, tempWidth, tempHeight);
+//			bmp.setPixels(pixels, 0, mWidth, 0, 0, tempWidth,tempHeight);
+			
 			/*for(int j = 0 ; j < mHeight ; j++)
 				for(int i = 0 ; i < mWidth ; i++){
 					
