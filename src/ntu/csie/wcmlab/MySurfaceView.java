@@ -101,7 +101,7 @@ public class MySurfaceView extends View {
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setStrokeWidth(12);
+		mPaint.setStrokeWidth(RatioFixer.getValue(12));
 		mPath = new Path();
 		//path for receive from remote
 		mRemotePath = new Path();
