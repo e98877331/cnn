@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="patchnote">目前僅支援區域網路內的連線(包含自己架設的android ap), 若使用自機架設的ap,則magic number為043001</string>
+    <string name="about_title">西岸馬達</string>
+    <string name="about_content">作者：\n楊證諺\ne98877331@gmail.com\n屠愚\n王璽承\n\n關於西岸馬達:\n這個app的第一個版本原本是一門課的期末project,我們是台大資工的碩士生分別來自於WC(非廁所 囧) lab和CM lab,取聯集WCM, West Coast Motor,西岸馬達!!</string>
     
 </resources>

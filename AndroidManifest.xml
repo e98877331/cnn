@@ -17,6 +17,7 @@
         <activity android:name=".MyCanvas" android:theme="@android:style/Theme.NoTitleBar"></activity>
         
         <activity android:name="ntu.csie.wcmlab.ImgLoaderActivity"></activity>
+        <activity android:name="AboutActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
         
     </application>
     

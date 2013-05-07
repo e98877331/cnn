@@ -162,78 +162,9 @@ public class CanvasNetActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				LayoutInflater inflater = LayoutInflater.from(CanvasNetActivity.this);
-				View login_view = inflater.inflate(R.layout.aboutus,null);
-				
-				AlertDialog.Builder builder = new AlertDialog.Builder(CanvasNetActivity.this);
-				builder.setView(login_view);
-				AlertDialog dialog = builder.create();
-				
-				dialog.setOnDismissListener(new OnDismissListener() {
-					
-					@Override
-					public void onDismiss(DialogInterface dialog) {
-						// TODO Auto-generated method stub
-						mAboutThread.interrupt();
-						Log.e("CYY", Boolean.toString(mAboutThread.isInterrupted()));
-						
-					}
-				});
-				
-				dialog.setOnCancelListener(new OnCancelListener() {
-					
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						// TODO Auto-generated method stub
-						mAboutThread.interrupt();
-						Log.e("CYY", "onCancel");
-					}
-				});
-				
-				
-				
-				dialog.show();
-		
-				
-				sview = (ScrollView)login_view.findViewById(R.id.aboutusview);
-				if(sview == null) Log.d("proj", "null!!!");
-				llayout = (LinearLayout)login_view.findViewById(R.id.lLayout1);
-				
-				mAboutThread = new Thread(){
-					public void run(){
-						while(!interrupted()){
-							try {								
-								sleep(100);
-								
-								Log.e("CYY", "scrolling");
-								
-								runOnUiThread(new Runnable() {
-									
-									@Override
-									public void run() {
-										// TODO Auto-generated method stub
-										bottom = llayout.getHeight() - sview.getHeight();
-										if(sview.getScrollY() >= bottom){
-											counter = 0;
-											sview.scrollTo(0, 0);
-											return;
-										}
-										sview.smoothScrollBy(0, 5);	
-									}
-								});
-								
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								Thread.currentThread().interrupt();
-							}
-						}						
-					}
-				};
-				mAboutThread.start();
-				
-
+				Intent intent = new Intent();
+				intent.setClass(CanvasNetActivity.this, AboutActivity.class);
+				startActivity(intent);
 			}
 		});
         /////////////////////////
