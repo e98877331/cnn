@@ -1,4 +1,4 @@
-package ntu.csie.wcmlab;
+package ntu.csie.wcmlab.canvasnetcore;
 
 import android.content.Context;
 import android.graphics.Bitmap;

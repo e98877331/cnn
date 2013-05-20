@@ -1,4 +1,4 @@
-package ntu.csie.wcmlab;
+package ntu.csie.wcmlab.canvasnetcore;
 
 import android.graphics.Paint;
 import android.graphics.Path;

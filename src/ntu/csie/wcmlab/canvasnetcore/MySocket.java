@@ -1,4 +1,4 @@
-package ntu.csie.wcmlab;
+package ntu.csie.wcmlab.canvasnetcore;
 
 import java.io.IOException;
 import java.net.InetAddress;

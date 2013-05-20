@@ -1,5 +1,7 @@
-package ntu.csie.wcmlab;
+package ntu.csie.wcmlab.canvasnetcore;
 
+
+import ntu.csie.wcmlab.canvasnetcore.R;
 import wcm.ytwhyc.ratiofixer.RatioActivity;
 import wcm.ytwhyc.ratiofixer.RatioFixer;
 import android.graphics.Color;

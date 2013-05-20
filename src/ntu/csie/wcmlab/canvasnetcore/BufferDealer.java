@@ -2,7 +2,7 @@
 
 
 
-package ntu.csie.wcmlab;
+package ntu.csie.wcmlab.canvasnetcore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

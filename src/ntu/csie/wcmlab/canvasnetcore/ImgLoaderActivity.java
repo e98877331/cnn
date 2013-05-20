@@ -1,27 +1,30 @@
 
-package ntu.csie.wcmlab;
+package ntu.csie.wcmlab.canvasnetcore;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
-import java.lang.Object;
 import java.util.Vector;
 
-
-
-
-
+import ntu.csie.wcmlab.canvasnetcore.R;
 import android.app.Activity;
-import android.content.*;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.*;
-import android.view.*;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.SpinnerAdapter;
 
 public class ImgLoaderActivity extends Activity {
 	/** Called when the activity is first created. */

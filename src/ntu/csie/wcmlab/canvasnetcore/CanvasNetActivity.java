@@ -1,16 +1,12 @@
-package ntu.csie.wcmlab;
+package ntu.csie.wcmlab.canvasnetcore;
 
 
 
-
-
-
+import ntu.csie.wcmlab.canvasnetcore.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.TransitionDrawable;
