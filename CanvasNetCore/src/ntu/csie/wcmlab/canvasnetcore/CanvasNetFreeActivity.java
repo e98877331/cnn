@@ -37,6 +37,9 @@ public class CanvasNetFreeActivity extends RatioActivity {
 		super.onLayoutCreated();
 
 		setContentView();
+		setRequestedOrientation(1);
+		buildPatchNoteDialog().show();
+		
 	}
 
 	private void setContentView() {
@@ -46,6 +49,7 @@ public class CanvasNetFreeActivity extends RatioActivity {
 		setAbout();
 		setHostBtn();
 		setClientBtn();
+		
 
 	}
 
@@ -164,7 +168,7 @@ public class CanvasNetFreeActivity extends RatioActivity {
 
 		clientBtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				openDialog(new ClientPositiveListener(),"Using client, please input the MAGIC NUMBER",false);
+				openDialog(new ClientPositiveListener(),R.string.canvasnet_client_dialog,false);
 			}
 		});
 		clientBtn.setOnTouchListener(new View.OnTouchListener() {
@@ -260,7 +264,7 @@ public class CanvasNetFreeActivity extends RatioActivity {
     }
 	
 
-	private void openDialog(BasePositiveListener l,String message,boolean isHost)
+	private void openDialog(BasePositiveListener l,int message,boolean isHost)
 	{
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
        
