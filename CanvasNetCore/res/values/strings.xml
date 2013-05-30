@@ -7,4 +7,6 @@
     <string name="about_title">West Coast Motor</string>
     <string name="about_content">Developer：\nChengYan Yang\ne98877331@gmail.com\nYu Tu\nShi-Chen Wang\n\nAbout West Coast Motor:\nAt the time of the first version of this app released,we were graduate school students of National Taiwan University.Because one of us is come from WC lab and the others are CM lab members, we combined the name of two labs results WCM,West Coast Motor!!</string>
     <string name="canvasnet_client_dialog">Please key in "Magic Number" to connect to the host</string>
+    <string name="mycanvas_magicnumber_title">Your Magic Number is:</string>
+    <string name="mycanvas_magicnumber_subtext">Tell you friends this number to connect in!!</string>
 </resources>

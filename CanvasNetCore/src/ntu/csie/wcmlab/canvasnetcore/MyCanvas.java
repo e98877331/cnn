@@ -530,7 +530,7 @@ public class MyCanvas extends RatioActivity{
         ipTextView.setText(ip);
         final ProgressDialog.Builder dialog = new ProgressDialog.Builder(MyCanvas.this); 
      //   dialog.setCancelable(false);  
-        dialog.setTitle("Your MAGIC NUMBER is:");  
+        dialog.setTitle(R.string.mycanvas_magicnumber_title);  
         
         dialog.setView(textEntryView);
         dialog.setNegativeButton("OK",  
