@@ -25,8 +25,8 @@ public class ClientDrawState {
 		mEraser = new Paint();
 		mEraser.setAntiAlias(true);
 		mEraser.setDither(true);
-		mEraser.setARGB(0, 0, 0, 0);
-		mEraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+		//mEraser.setARGB(0, 0, 0, 0);
+		mEraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 		mEraser.setStyle(Paint.Style.STROKE);
 		mEraser.setStrokeJoin(Paint.Join.ROUND);
 		mEraser.setStrokeCap(Paint.Cap.ROUND);
