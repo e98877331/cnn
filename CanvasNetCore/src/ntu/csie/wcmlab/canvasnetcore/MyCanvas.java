@@ -3,7 +3,8 @@ package ntu.csie.wcmlab.canvasnetcore;
 
 import java.io.ByteArrayOutputStream;
 
-import ntu.csie.wcmlab.canvasnetcore.R;
+import ntu.csie.wcmlab.canvasnetcore.utility.NetworkStatusChecker;
+
 import wcm.ytwhyc.ratiofixer.RatioActivity;
 import wcm.ytwhyc.ratiofixer.RatioFixer;
 import android.app.ProgressDialog;
@@ -16,6 +17,8 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -180,6 +183,19 @@ public class MyCanvas extends RatioActivity{
         mIsServer = bundle.getBoolean("isServer");
         if(mIsServer)
         {
+        	if(NetworkStatusChecker.checkIfWifyConnected(this))
+        	{
+        		Log.e("MyCanvas","check wify");
+        	}
+        	if(NetworkStatusChecker.checkIfThethering(this))
+        	{
+        		Log.e("MyCanvas","thethering");
+        	}
+        	else
+        	{
+        		Log.e("MyCanvas","no thethering");
+        	}
+        	
         	mMySocket.server();
         	checkIP();
         }
@@ -411,6 +427,8 @@ public class MyCanvas extends RatioActivity{
 			}
 		});
 	}
+	
+
 	
 	//ChengYan: called when client connect fail
 	private void clientTimeOut()

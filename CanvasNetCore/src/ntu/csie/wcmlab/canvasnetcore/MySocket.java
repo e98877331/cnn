@@ -10,6 +10,9 @@ import java.net.SocketTimeoutException;
 import java.util.Iterator;
 import java.util.Vector;
 
+import android.app.Activity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -70,6 +73,8 @@ public class MySocket {
 		
 		
 	}
+	
+
 
 	public void server() {
 
