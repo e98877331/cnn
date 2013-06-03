@@ -3,6 +3,7 @@ package ntu.csie.wcmlab.canvasnetcore;
 
 import java.io.ByteArrayOutputStream;
 
+import ntu.csie.wcmlab.canvasnetcore.mycanvas.NoWifyAndThetheringView;
 import ntu.csie.wcmlab.canvasnetcore.utility.NetworkStatusChecker;
 
 import wcm.ytwhyc.ratiofixer.RatioActivity;
@@ -183,21 +184,28 @@ public class MyCanvas extends RatioActivity{
         mIsServer = bundle.getBoolean("isServer");
         if(mIsServer)
         {
-        	if(NetworkStatusChecker.checkIfWifyConnected(this))
-        	{
-        		Log.e("MyCanvas","check wify");
-        	}
-        	if(NetworkStatusChecker.checkIfThethering(this))
-        	{
-        		Log.e("MyCanvas","thethering");
-        	}
-        	else
-        	{
-        		Log.e("MyCanvas","no thethering");
-        	}
-        	
         	mMySocket.server();
-        	checkIP();
+        	
+            	if(NetworkStatusChecker.checkIfThethering(this))
+            	{
+            		Log.e("MyCanvas","thethering");
+            		checkIP("043001");
+            	}
+            	else
+            	{
+            		
+                	if(NetworkStatusChecker.checkIfWifyConnected(this))
+                	{
+                		checkIP();
+                	}
+                	else
+                	{
+                		NoWifyAndThetheringView.show(this);
+                	}
+            		Log.e("MyCanvas","no thethering");
+            	}
+        		 	
+        	
         }
         else
         {
@@ -451,6 +459,17 @@ public class MyCanvas extends RatioActivity{
 		this.finish();
 		
 	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+        mView.mBufferDealer.clear();
+
+		mMySocket.disconnect();
+		this.finish();
+		
+	}
 
 	
 	public MySocket getSocket()
@@ -494,6 +513,9 @@ public class MyCanvas extends RatioActivity{
 			startActivityForResult(intent, 1);
 			break;
 		case 3:
+			if(NetworkStatusChecker.checkIfThethering(this))
+			checkIP("043001");
+			else
 			checkIP();
 			break;
 		case 4:
@@ -521,6 +543,26 @@ public class MyCanvas extends RatioActivity{
 	        mImageEditingView.startEditing(path);
 	        
 		}
+	}
+	
+	public void checkIP(String ip)
+	{ 
+		LayoutInflater inflater = LayoutInflater.from(MyCanvas.this);  
+        final View textEntryView = inflater.inflate(R.layout.dialog, null);  
+        final TextView ipTextView=(TextView)textEntryView.findViewById(R.id.ipTextView);
+        ipTextView.setText(ip);
+        final ProgressDialog.Builder dialog = new ProgressDialog.Builder(MyCanvas.this); 
+     //   dialog.setCancelable(false);  
+        dialog.setTitle(R.string.mycanvas_magicnumber_title);  
+        
+        dialog.setView(textEntryView);
+        dialog.setNegativeButton("OK",  
+                new DialogInterface.OnClickListener() {  
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });  
+        dialog.show();
+		
 	}
 	
 	// IP alert dialog
