@@ -32,6 +32,7 @@ public class CanvasNetPaid extends RatioActivity {
 	Button aboutBtn;
 	Button hostBtn;
 	Button clientBtn;
+	Button qrcodeBtn;
 
 	@Override
 	public void onLayoutCreated() {
@@ -48,6 +49,7 @@ public class CanvasNetPaid extends RatioActivity {
 
 		getMainLayout().setBackgroundResource(R.drawable.canvasnet_background);
 		setTitleView();
+		setQRCodeBtn();
 		setAbout();
 		setHostBtn();
 		setClientBtn();
@@ -94,6 +96,23 @@ public class CanvasNetPaid extends RatioActivity {
 				}
 			});
 	}
+	
+	private void setQRCodeBtn()
+	{
+		qrcodeBtn = new Button(this);
+		qrcodeBtn.setBackgroundResource(R.drawable.qrcode);
+		getMainLayout().addView(qrcodeBtn, RatioFixer.getLayoutParam(110, 110, 290, 190));
+		qrcodeBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				openQRCodeDialog();
+			}
+		});
+		
+	}
+
 
 	private void setAbout() {
 		aboutView = new AboutView(this);
@@ -304,7 +323,7 @@ public class CanvasNetPaid extends RatioActivity {
         final View textEntryView = inflater.inflate(R.layout.qrcode_dialog, null);  
         final ProgressDialog.Builder dialog = new ProgressDialog.Builder(CanvasNetPaid.this); 
       //  dialog.setCancelable(false);  
-        dialog.setTitle("Get Canvas.NET from Android Market!!");  
+        dialog.setTitle(R.string.canvasnet_qrcode_title);  
         dialog.setView(textEntryView);
         dialog.show();
 		
