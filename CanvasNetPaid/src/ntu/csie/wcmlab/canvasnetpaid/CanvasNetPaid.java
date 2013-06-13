@@ -35,14 +35,29 @@ public class CanvasNetPaid extends RatioActivity {
 	Button qrcodeBtn;
 
 	@Override
-	public void onLayoutCreated() {
+	public void onInitialize() {
 		// TODO Auto-generated method stub
-		super.onLayoutCreated();
-
+		super.onInitialize();
+		
+		
+	}
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		
 		setContentView();
 		setRequestedOrientation(1);
 		buildPatchNoteDialog().show();
 		
+	}
+	
+	@Override
+	public void onLayoutCreated() {
+		// TODO Auto-generated method stub
+		super.onLayoutCreated();
+
+
 	}
 
 	private void setContentView() {
