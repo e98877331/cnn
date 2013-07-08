@@ -14,5 +14,9 @@
     <string name="mycanvas_magicnumber_subtext">使用這個號碼來建立連線!!</string>
     <string name="mycanvas_nowifyandthethering_title">注意!!</string>
     <string name="mycanvas_nowifyandthethering_body">偵測到Wifi和Wifi熱點網路共享均未開啟, Canvas.Net需要設備在同一個區域網路下(同一個Wifi或自行架設的Wifi熱點)才可以建立連線!!</string>
-    
+    <string name="mycanvas_menu_loadimage">讀取圖片</string>
+    <string name="mycanvas_menu_checkip">我的連線號碼</string>
+    <string name="mycanvas_menu_save">儲存</string>
+    <string name="global_ok">確定</string>
+    <string name="global_cancel">放棄</string>
 </resources>

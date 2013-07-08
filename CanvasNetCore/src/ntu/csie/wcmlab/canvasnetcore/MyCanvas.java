@@ -4,12 +4,13 @@ import java.io.ByteArrayOutputStream;
 
 import ntu.csie.wcmlab.canvasnetcore.mycanvas.NoWifyAndThetheringView;
 import ntu.csie.wcmlab.canvasnetcore.utility.NetworkStatusChecker;
-
 import wcm.ytwhyc.ratiofixer.RatioActivity;
 import wcm.ytwhyc.ratiofixer.RatioFixer;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,10 +18,10 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyCanvas extends RatioActivity {
-
+	  private static final int SELECT_PICTURE = 1;
 	private MyCanvas mSelf;
 	public MySurfaceView mView;
 	private MySocket mMySocket;
@@ -71,9 +72,9 @@ public class MyCanvas extends RatioActivity {
 
 		mRL = new RelativeLayout(this);
 		imgEdtOKBtn = new Button(this);
-		imgEdtOKBtn.setText("Ok");
+		imgEdtOKBtn.setText(R.string.global_ok);
 		imgEdtCancelBtn = new Button(this);
-		imgEdtCancelBtn.setText("Cancel");
+		imgEdtCancelBtn.setText(R.string.global_cancel);
 
 		CcBtn = new ImageButton(this);
 		initImageButton(CcBtn, R.drawable.bt_palette_128);
@@ -116,9 +117,9 @@ public class MyCanvas extends RatioActivity {
 				RatioFixer.getLayoutParam(153, 130, 612, 0));
 
 		getMainLayout().addView(imgEdtOKBtn,
-				RatioFixer.getLayoutParam(153, 130, 300, 1050));
+				RatioFixer.getLayoutParam(384, 130,0, 1100));
 		getMainLayout().addView(imgEdtCancelBtn,
-				RatioFixer.getLayoutParam(153, 130, 500, 1050));
+				RatioFixer.getLayoutParam(384, 130, 384, 1100));
 
 		getMainLayout().addView(loadedImage,
 				RatioFixer.getLayoutParam(300, 300, 200, 500));
@@ -476,9 +477,9 @@ public class MyCanvas extends RatioActivity {
 		// 把计1:竤舱id, 把计2:itemId, 把计3:item抖, 把计4:item嘿
 		// menu.add(0, 0, 0, "Next Page");
 		// menu.add(0, 1, 1, "Frame Select");
-		menu.add(0, 2, 2, "Load Image");
-		menu.add(0, 3, 3, "Check IP");
-		menu.add(0, 4, 4, "Save");
+		menu.add(0, 2, 2, R.string.mycanvas_menu_loadimage);
+		menu.add(0, 3, 3, R.string.mycanvas_menu_checkip);
+		menu.add(0, 4, 4, R.string.mycanvas_menu_save);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -495,11 +496,11 @@ public class MyCanvas extends RatioActivity {
 					Toast.LENGTH_SHORT).show();
 			break;
 		case 2:
-			Intent intent = new Intent();
-			intent.setClass(MyCanvas.this, ImgLoaderActivity.class);
-			Bundle bundle = new Bundle();
-			intent.putExtras(bundle);
-			startActivityForResult(intent, 1);
+			  Intent intent = new Intent();
+              intent.setType("image/*");
+              intent.setAction(Intent.ACTION_GET_CONTENT);
+              startActivityForResult(Intent.createChooser(intent,
+                      "Select Picture"), SELECT_PICTURE);
 			break;
 		case 3:
 			if (NetworkStatusChecker.checkIfThethering(this))
@@ -508,11 +509,24 @@ public class MyCanvas extends RatioActivity {
 				checkIP();
 			break;
 		case 4:
-			String fileName = mView.mBufferDealer.saveBitmapToMemory(mView
-					.getBitmap());
+//			String fileName = mView.mBufferDealer.saveBitmapToMemory(mView
+//					.getBitmap());
+//
+//			mView.errorToast("Save picture to " + fileName + ".jpg");
 
-			mView.errorToast("Save picture to " + fileName + ".jpg");
-
+			 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			 dialog.setTitle("Note:");
+			 dialog.setMessage("Comming SoOn!!");
+			 dialog.setIcon(android.R.drawable.ic_dialog_alert);
+			 dialog.setCancelable(false);
+			 dialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {  
+			     public void onClick(DialogInterface dialog, int which) {  
+			     
+			     }  
+			 }); 
+			
+			 dialog.show();
+			
 			break;
 		default:
 		}
@@ -528,13 +542,24 @@ public class MyCanvas extends RatioActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == 1 && resultCode == RESULT_OK) {
-			Bundle b = data.getExtras();
-			String path = b.getString("imgPath");
-			mImageEditingView.startEditing(path);
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = getPath(selectedImageUri);
+                mImageEditingView.startEditing(selectedImagePath);
+            }
 
 		}
 	}
 
+    private String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+	
 	public void checkIP(String ip) {
 		LayoutInflater inflater = LayoutInflater.from(MyCanvas.this);
 		final View textEntryView = inflater.inflate(R.layout.dialog, null);

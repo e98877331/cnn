@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="hello">Hello World, CanvasNetActivity!</string>
     <string name="app_name">CanvasNet</string>
     <string name="hello_gallery">Hello World, GalleryActivity!</string>
@@ -13,4 +14,10 @@
     <string name="mycanvas_magicnumber_subtext">Tell you friends this number to connect in!!</string>
     <string name="mycanvas_nowifyandthethering_title">Warning!!</string>
     <string name="mycanvas_nowifyandthethering_body">Detect neither Wifi nor thethering is enabled, Canvas.net need\'s devices in the same local network(Wifi or thethering) to construct the connection.</string>
+    <string name="mycanvas_menu_loadimage">Load Image</string>
+    <string name="mycanvas_menu_checkip">Magic Number</string>
+    <string name="mycanvas_menu_save">Save</string>
+    <string name="global_ok">OK</string>
+    <string name="global_cancel">Cancel</string>
+
 </resources>
