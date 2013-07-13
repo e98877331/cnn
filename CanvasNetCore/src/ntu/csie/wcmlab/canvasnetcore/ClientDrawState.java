@@ -1,5 +1,6 @@
 package ntu.csie.wcmlab.canvasnetcore;
 
+import wcm.ytwhyc.ratiofixer.RatioFixer;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -20,7 +21,7 @@ public class ClientDrawState {
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setStrokeWidth(12);
+		mPaint.setStrokeWidth(RatioFixer.getValue(12));
 		
 		mEraser = new Paint();
 		mEraser.setAntiAlias(true);
