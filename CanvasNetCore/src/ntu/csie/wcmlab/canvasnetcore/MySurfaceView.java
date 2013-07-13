@@ -99,6 +99,9 @@ public class MySurfaceView extends View {
 		//path for receive from remote
 		mRemotePath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+		mBitmapPaint.setAntiAlias(true);
+		mBitmapPaint.setFilterBitmap(true);
+		mBitmapPaint.setDither(true);
 		
 		
 		//drawStateMap.put

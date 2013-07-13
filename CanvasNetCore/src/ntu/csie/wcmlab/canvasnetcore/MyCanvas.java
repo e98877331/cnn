@@ -510,9 +510,7 @@ public class MyCanvas extends RatioActivity {
                       "Select Picture"), SELECT_PICTURE);
 			break;
 		case 3:
-			if (NetworkStatusChecker.checkIfThethering(this))
-				checkIP("043001");
-			else
+
 				checkIP();
 			break;
 		case 4:
