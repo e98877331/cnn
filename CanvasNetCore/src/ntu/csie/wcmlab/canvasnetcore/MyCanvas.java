@@ -1,9 +1,16 @@
 package ntu.csie.wcmlab.canvasnetcore;
 
 import java.io.ByteArrayOutputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 
 import ntu.csie.wcmlab.canvasnetcore.mycanvas.NoWifyAndThetheringView;
 import ntu.csie.wcmlab.canvasnetcore.utility.NetworkStatusChecker;
+
+import org.apache.http.conn.util.InetAddressUtils;
+
 import wcm.ytwhyc.ratiofixer.RatioActivity;
 import wcm.ytwhyc.ratiofixer.RatioFixer;
 import android.app.AlertDialog;
@@ -19,9 +26,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -191,7 +200,7 @@ public class MyCanvas extends RatioActivity {
 
 			if (NetworkStatusChecker.checkIfThethering(this)) {
 				Log.e("MyCanvas", "thethering");
-				checkIP("043001");
+				checkIP();
 			} else {
 
 				if (NetworkStatusChecker.checkIfWifyConnected(this)) {
@@ -580,6 +589,7 @@ public class MyCanvas extends RatioActivity {
 
 	}
 
+
 	// IP alert dialog
 	public void checkIP() {
 
@@ -593,7 +603,10 @@ public class MyCanvas extends RatioActivity {
 
 		// ChengYan: cheng ip to Six number
 
-		String ip = mMySocket.getIP();
+		//String ip = mMySocket.getIP();
+	    String ip = MySocket.getIPAddress(true);
+		
+		
 		String[] tempp = ip.split("\\.");
 
 		tempp[2] = ("00" + tempp[2]);
