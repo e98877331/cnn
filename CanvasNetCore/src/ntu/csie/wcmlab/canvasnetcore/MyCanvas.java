@@ -180,8 +180,6 @@ public class MyCanvas extends RatioActivity {
 
 		mSelf = this;
 
-		Log.e("MySocket Construction", "MySocket Construction");
-
 		mMySocket = new MySocket(mView, 5050,
 				(WifiManager) getSystemService(WIFI_SERVICE));
 
@@ -199,7 +197,7 @@ public class MyCanvas extends RatioActivity {
 			mMySocket.server();
 
 			if (NetworkStatusChecker.checkIfThethering(this)) {
-				Log.e("MyCanvas", "thethering");
+				
 				checkIP();
 			} else {
 
@@ -208,7 +206,7 @@ public class MyCanvas extends RatioActivity {
 				} else {
 					NoWifyAndThetheringView.show(this);
 				}
-				Log.e("MyCanvas", "no thethering");
+				
 			}
 
 		} else {
@@ -223,13 +221,13 @@ public class MyCanvas extends RatioActivity {
 			part1 = Integer.toString(Integer.parseInt(part1));
 			String part2 = remoteIP.substring(3);
 			part2 = Integer.toString(Integer.parseInt(part2));
-			Log.e("CYY myIP", mMySocket.getIP());
+			
 			String[] tt = mMySocket.getIP().split("\\.");
 			if (tt[0].equals("0"))
 				tt[0] = "192";
 			if (tt[1].equals("0"))
 				tt[1] = "168";
-			// Log.e("CYY",mMySocket.getIP().substring(0, 8));
+	
 			remoteIP = tt[0] + "." + tt[1] + "." + part1 + "." + part2;
 
 			// ChengYan: open a thread for Client connecting to avoid stall.

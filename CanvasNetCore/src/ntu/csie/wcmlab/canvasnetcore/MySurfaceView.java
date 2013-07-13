@@ -373,8 +373,7 @@ public class MySurfaceView extends View {
 	public void process(Commands.BaseCmd cmd)
 	{
 		
-		Log.e("receive command", Integer.toString(cmd.ID));
-		
+	
 		switch (cmd.ID)
 		{
 		
@@ -383,8 +382,7 @@ public class MySurfaceView extends View {
 			
 			Commands.SendPointCmd Dpc = (Commands.SendPointCmd) cmd;
 			
-			Log.e("CY", drawStateMap.keySet().toString());
-			
+
 			Path tempPath = drawStateMap.get(cmd.getFrom()).getPath();
 			
 			float x = RatioFixer.getValue((int)Dpc.getX());
@@ -410,7 +408,7 @@ public class MySurfaceView extends View {
 		//ChengYan: Receive command which is added for debug
 		case 2:
 		    Commands.SendNumberCmd Snc = (Commands.SendNumberCmd) cmd;
-			Log.e("receive num", Integer.toString(Snc.getNum()));
+			
 			break;
 			
 		//ChengYan: Receive change color and brush width command 
@@ -436,7 +434,7 @@ public class MySurfaceView extends View {
 		case 5:
 			Commands.UndoRedoCmd URC = (Commands.UndoRedoCmd) cmd;
 			
-			Log.e("Comamnd", "receive undo redo");
+		
 			if(URC.getUnOrRe())
 				undo();
 			else
@@ -485,7 +483,7 @@ public class MySurfaceView extends View {
 			setBitmap(bmp);
 			pushBuffer(bmp);
 			tempBmp.recycle();
-			Log.e("Comamnd", "receive bitmap");
+			
 			break;
 		//receive client connect construct command 
 		case 7:
@@ -516,7 +514,6 @@ public class MySurfaceView extends View {
 
 			for (String s : SBCC.getClientIDS()) {
 
-				// Log.e("CY", "broadcasted key" + s);
 				if (!drawStateMap.containsKey(s)) {
 
 					drawStateMap.put(s, new ClientDrawState());

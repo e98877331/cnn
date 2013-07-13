@@ -23,7 +23,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.format.Formatter;
-import android.util.Log;
+
 
 public class MySocket {
 
@@ -61,7 +61,6 @@ public class MySocket {
 
 		try {
 			InetAddress.getByName(selfIP);
-			Log.e("IPpppp", selfIP);
 			serverSocket = new ServerSocket(listenPort);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -83,20 +82,20 @@ public class MySocket {
 
 	public void server() {
 
-		Log.d("proj" , "click server");
+		//Log.d("proj" , "click server");
 		IsServer = true;
 		tmp = new Thread() {
 			public void run() {
 				while(true){
 
 						try {						
-							Log.d("proj" , "listen!!!");							
+							//Log.d("proj" , "listen!!!");							
 							Socket socket = serverSocket.accept();
 							Connection c = new Connection(socket);
 							list.add(c);
 							list.elementAt(list.size()-1).setIndex(list.size()-1);
-							Log.d("proj" , "new  a thread for new connection");
-							Log.d("proj" , "add it: " + c.sck.toString());
+							//Log.d("proj" , "new  a thread for new connection");
+							//Log.d("proj" , "add it: " + c.sck.toString());
 							
 							
 							//ChengYan: tell host all exist client
@@ -105,7 +104,7 @@ public class MySocket {
 							list.elementAt(list.size()-1).RunThread = new Thread(){
 								public void run(){
 									Connection tempc = list.elementAt(list.size()-1);
-									Log.d("proj" , "in thread:" + tempc.toString());
+									//Log.d("proj" , "in thread:" + tempc.toString());
 									while (!Thread.interrupted()) {
 										
 										try {
@@ -113,10 +112,10 @@ public class MySocket {
 										
 										// get command from ib then send to UIthread
 											Commands.BaseCmd tempC;
-											Log.d("proj",  "thread["+ tempc.getIndex() +"]B4 read obj!!");
+											//Log.d("proj",  "thread["+ tempc.getIndex() +"]B4 read obj!!");
 													
 											tempC = (Commands.BaseCmd) tempc.ib.readObject();											
-											Log.d("proj",  "thread["+ tempc.getIndex() +"]After read obj!!");
+											//Log.d("proj",  "thread["+ tempc.getIndex() +"]After read obj!!");
 											Bundle tempB = new Bundle();
 											tempB.putSerializable("cmd", tempC);
 											Message m = new Message();
@@ -126,16 +125,16 @@ public class MySocket {
 												
 											Iterator<Connection> it1 = list.iterator();
 											
-											Log.d("proj" , "["+tempc.getIndex()+"] thread: " );
+											//Log.d("proj" , "["+tempc.getIndex()+"] thread: " );
 											while(it1.hasNext()){
 												Connection tmpcc = (Connection) it1.next();
-												//Log.d("proj" , "\t [" + tmpcc.getIndex()+"] con " );
+												////Log.d("proj" , "\t [" + tmpcc.getIndex()+"] con " );
 												if( !tempc.equals(tmpcc) ){	
 													tmpcc.send(tempC);	
-													Log.d("proj" , "\t [" + tmpcc.getIndex()+"] connection send" );
+													//Log.d("proj" , "\t [" + tmpcc.getIndex()+"] connection send" );
 												}
 												else{
-													Log.d("proj" , "\t [" + tmpcc.getIndex()+"] con " );
+													//Log.d("proj" , "\t [" + tmpcc.getIndex()+"] con " );
 												}
 												
 											}		
@@ -148,15 +147,15 @@ public class MySocket {
 											e.printStackTrace();
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
-											Log.d("proj" , "in read exception!!!");
+											//Log.d("proj" , "in read exception!!!");
 											//here is the exception of readObject
 											//maybe the client has close the socket!!
 											//has to stop the thread and clean the connection
 											if(list.removeElement(tempc)){
-												Log.d("proj" , "delete connection success");
+												//Log.d("proj" , "delete connection success");
 											}
 											else{
-												Log.d("proj" , "not found connection");
+												//Log.d("proj" , "not found connection");
 											}
 										
 											PrintList();
@@ -207,9 +206,9 @@ public class MySocket {
 				MySocket.this.sendMessageToUIThread("Connect to" + ip);
 				
 				ob = new java.io.ObjectOutputStream(clientSocket.getOutputStream());
-				if (ob != null)		Log.d("proj", "client ob not null");
+				//if (ob != null)		Log.d("proj", "client ob not null");
 				ib = new java.io.ObjectInputStream(clientSocket.getInputStream());
-				if (ib != null)		Log.d("proj", "client ib not null");
+				//if (ib != null)		Log.d("proj", "client ib not null");
 				tmp = new Thread() {
 					public void run() {
 
@@ -230,7 +229,7 @@ public class MySocket {
 
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
-							Log.d("proj" , "in client thread exception!!");
+							//Log.d("proj" , "in client thread exception!!");
 							e.printStackTrace();
 							disconnect();
 							MySocket.this.sendMessageToUIThread("Connect Lost");
@@ -240,13 +239,13 @@ public class MySocket {
 					}
 				}
 			};
-				Log.d("proj" , "thread ID: " +tmp.getId());
-				Log.d("proj" , "thread Name: " +tmp.getName());
+				//Log.d("proj" , "thread ID: " +tmp.getId());
+				//Log.d("proj" , "thread Name: " +tmp.getName());
 				tmp.start();
 				
 				//ChengYan: tell all others the new Client
 				send(new Commands.ClientConnectCmd());
-				Log.d("proj" , "after!!! ");
+				//Log.d("proj" , "after!!! ");
 			}			
 
 			
@@ -318,7 +317,7 @@ public class MySocket {
 			list.clear();
 
 			
-			Log.d("proj" , "@@@");
+			//Log.d("proj" , "@@@");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -334,7 +333,7 @@ public class MySocket {
 				//ChengYan: annotate the command is send from host
 				obj.setFrom(idFromIP); //ChengYan: 0 means from Host
 				
-				Log.d("proj" , "Is Server: send to " + list.size());
+				//Log.d("proj" , "Is Server: send to " + list.size());
 				Iterator<Connection> it = list.iterator();
 				while(it.hasNext()){
 					Connection tmpc = it.next();
@@ -384,12 +383,12 @@ public class MySocket {
 	
 	
 	public void PrintList(){
-		Log.d("proj" , "In PrintList");
+		//Log.d("proj" , "In PrintList");
 		Iterator<Connection> it = list.iterator();
 		
 		while(it.hasNext()){
 			Connection c = it.next();
-			Log.d("proj" , "\t " + c.sck.toString());
+			//Log.d("proj" , "\t " + c.sck.toString());
 		}
 		
 	}

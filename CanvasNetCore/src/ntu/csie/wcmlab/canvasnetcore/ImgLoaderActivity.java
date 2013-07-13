@@ -169,7 +169,7 @@ public class ImgLoaderActivity extends Activity {
 
 		
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			Log.d("tantofish","Folder Index: "+folderIndex+"Position"+position + "parent" + parent);
+			
 			final ImageView i = new ImageView(mContext);
 			if (imageIndex == -1)
 				folder = parent;

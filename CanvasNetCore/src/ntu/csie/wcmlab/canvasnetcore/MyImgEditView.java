@@ -328,7 +328,7 @@ public class MyImgEditView extends View {
 	private static Bitmap carefully(Bitmap srcImg, Matrix matrix, float factor){
 		Bitmap bmOK = null;
 		matrix.postScale(factor, factor);
-		Log.e("TantofishException", "createBitmapCarefully scale factor = " + factor);
+
     	try{
     		bmOK = Bitmap.createBitmap(srcImg, 0, 0, srcImg.getWidth(), srcImg.getHeight(), matrix, true);
     		return bmOK;
