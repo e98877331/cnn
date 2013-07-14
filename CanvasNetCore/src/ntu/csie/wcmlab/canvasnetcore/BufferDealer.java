@@ -10,11 +10,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 
 
@@ -24,6 +27,7 @@ public class BufferDealer {
 	private boolean isUndoing;
 	private int undoCounter;
 	
+	private final String savePath = Environment.getExternalStorageDirectory()+"/Pictures/CanvasNET";
 	
 	public BufferDealer()
 	{
@@ -112,23 +116,35 @@ public class BufferDealer {
 		return (undoCounter > 0);
 	}
 	
+	public String getSavePath()
+	{
+	  return savePath;
+	}
+	
 	public String saveBitmapToMemory(Bitmap bmp)
 	{
 		
 	//	Log.e("CYY", Environment.getExternalStorageDirectory().toString());
-		String root = Environment.getExternalStorageDirectory().toString();
-		new File(root + "/pictures/CanvasNET").mkdirs();
+		
+		//String savePath = Environment.getExternalStorageDirectory()+"/Pictures/CanvasNET";
+		new File(savePath).mkdirs();
 		// String root = Environment.getExternalStorageDirectory().toString();
 		// new File(root + "/CanvasNET").mkdirs();
 		Bitmap bg = bmp.copy(Bitmap.Config.ARGB_8888, true);
 		Canvas tempcanvasCanvas = new Canvas(bg);
 		tempcanvasCanvas.drawColor(Color.WHITE);
-		tempcanvasCanvas.drawBitmap(bmp, 0, 0, new Paint(Paint.DITHER_FLAG));
+		
+	
+		Paint mBitmapPaint = new Paint();
+		mBitmapPaint.setAntiAlias(true);
+		mBitmapPaint.setFilterBitmap(true);
+		mBitmapPaint.setDither(true);
+		tempcanvasCanvas.drawBitmap(bmp, 0, 0, mBitmapPaint);
 		
 		
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		
-		bg.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+		bg.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 		
 		bg.recycle();
 		tempcanvasCanvas = null;
@@ -137,20 +153,16 @@ public class BufferDealer {
 		int counter =1;
 		fileName = "CanvasNetPic0";
 		// you can create a new file name "test.jpg" in sdcard folder.
-		File f = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "pictures" + File.separator + "CanvasNET"
-				+ File.separator +fileName + ".jpg");
+		File f = new File(savePath+"/"+fileName+".jpg");
 		while(f.exists())
 		{
 			fileName = fileNameBase + Integer.toString(counter);
-			 f = new File(Environment.getExternalStorageDirectory()
-					+ File.separator + "pictures" + File.separator + "CanvasNET"
-					+ File.separator +fileName + ".jpg");
+			 f = new File(savePath+"/"+fileName+".jpg");
 			 counter++;
 		}
 		
 		
-		
+		Log.e("BufferDealer","save to "+ savePath+"/"+fileName+".jpg");
 		try {
 			f.createNewFile();
 
@@ -159,6 +171,7 @@ public class BufferDealer {
 			fo.write(bytes.toByteArray());
 			bytes.close();
 			fo.close();
+	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -514,23 +515,12 @@ public class MyCanvas extends RatioActivity {
 				checkIP();
 			break;
 		case 4:
-//			String fileName = mView.mBufferDealer.saveBitmapToMemory(mView
-//					.getBitmap());
-//
-//			mView.errorToast("Save picture to " + fileName + ".jpg");
+			String fileName = mView.mBufferDealer.saveBitmapToMemory(mView
+					.getBitmap());
 
-			 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			 dialog.setTitle("Note:");
-			 dialog.setMessage("Comming SoOn!!");
-			 dialog.setIcon(android.R.drawable.ic_dialog_alert);
-			 dialog.setCancelable(false);
-			 dialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {  
-			     public void onClick(DialogInterface dialog, int which) {  
-			     
-			     }  
-			 }); 
-			
-			 dialog.show();
+			mView.errorToast("Save picture to " + fileName + ".jpg");
+			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ mView.mBufferDealer.getSavePath())));
+
 			
 			break;
 		default:
