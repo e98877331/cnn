@@ -1,19 +1,12 @@
 package ntu.csie.wcmlab.canvasnetcore;
 
 import java.io.ByteArrayOutputStream;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Collections;
-import java.util.List;
 
+import ntu.csie.wcmlab.canvasnetcore.mycanvas.ColorPickerView;
 import ntu.csie.wcmlab.canvasnetcore.mycanvas.NoWifyAndThetheringView;
 import ntu.csie.wcmlab.canvasnetcore.utility.NetworkStatusChecker;
-
-import org.apache.http.conn.util.InetAddressUtils;
-
 import wcm.ytwhyc.ratiofixer.RatioActivity;
 import wcm.ytwhyc.ratiofixer.RatioFixer;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,12 +19,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,9 +32,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.larswerkman.colorpicker.ColorPicker;
+import com.larswerkman.colorpicker.OpacityBar;
+import com.larswerkman.colorpicker.SVBar;
+import com.larswerkman.colorpicker.SaturationBar;
+import com.larswerkman.colorpicker.ValueBar;
 
 public class MyCanvas extends RatioActivity {
 	  private static final int SELECT_PICTURE = 1;
@@ -475,9 +472,25 @@ public class MyCanvas extends RatioActivity {
 	private void useColorPicker() {
 		// new ColorPickDialog(this , mView.getPaint() ,
 		// mView.getPaint().getColor()).show();
-		new ColorPickDialog(this, mView.getPaint(), mView.getPaint().getColor())
-				.show();
-
+		
+//		new ColorPickDialog(this, mView.getPaint(), mView.getPaint().getColor())
+//				.show();
+		
+		
+//      ColorPicker picker = new ColorPicker(this);
+//      picker.setBackgroundColor(Color.BLUE);
+//      
+//      SVBar svBar = new SVBar(this);
+//      OpacityBar opacityBar = new OpacityBar(this);
+//      SaturationBar saturationBar = new SaturationBar(this);
+//      ValueBar valueBar = new ValueBar(this);
+		
+		
+//      
+     ColorPickerView cpv = new ColorPickerView(this,mView.getPaint());
+      
+      getMainLayout().addView(cpv,RatioFixer.getLayoutParam( 568,1030,100,100));
+      
 	}
 
 	@Override
