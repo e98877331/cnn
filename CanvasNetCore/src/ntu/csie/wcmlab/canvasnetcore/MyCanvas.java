@@ -2,7 +2,7 @@ package ntu.csie.wcmlab.canvasnetcore;
 
 import java.io.ByteArrayOutputStream;
 
-import ntu.csie.wcmlab.canvasnetcore.mycanvas.ColorPickerView;
+import ntu.csie.wcmlab.canvasnetcore.mycanvas.ColorPickerDialog;
 import ntu.csie.wcmlab.canvasnetcore.mycanvas.NoWifyAndThetheringView;
 import ntu.csie.wcmlab.canvasnetcore.utility.NetworkStatusChecker;
 import wcm.ytwhyc.ratiofixer.RatioActivity;
@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
@@ -32,16 +33,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.larswerkman.colorpicker.ColorPicker;
-import com.larswerkman.colorpicker.OpacityBar;
-import com.larswerkman.colorpicker.SVBar;
-import com.larswerkman.colorpicker.SaturationBar;
-import com.larswerkman.colorpicker.ValueBar;
 
 public class MyCanvas extends RatioActivity {
 	  private static final int SELECT_PICTURE = 1;
@@ -487,9 +481,22 @@ public class MyCanvas extends RatioActivity {
 		
 		
 //      
-     ColorPickerView cpv = new ColorPickerView(this,mView.getPaint());
+    // ColorPickerView cpv = new ColorPickerView(this,mView.getPaint());
       
-      getMainLayout().addView(cpv,RatioFixer.getLayoutParam( 568,1030,100,100));
+     // getMainLayout().addView(cpv,RatioFixer.getLayoutParam( 568,1030,100,100));
+     
+     ColorPickerDialog cpd = new ColorPickerDialog(this, mView.getPaint());
+     cpd.setOnColorDecideCallback(new ColorPickerDialog.OnColorDecideCallBack() {
+
+		@Override
+		public void run(Paint pPaint) {
+			// TODO Auto-generated method stub
+			MyCanvas.this.getSocket().send(new Commands.ChangeColorCmd(pPaint.getColor(),pPaint.getStrokeWidth()/RatioFixer.getRatio()));
+		}
+		
+
+	});
+     cpd.show();
       
 	}
 
