@@ -31,7 +31,7 @@ public class ColorPickerDialog extends Dialog {
 		
 		this.setContentView(mView);
 		
-		this.setTitle("choose color");
+		this.setTitle(R.string.mycanvas_colorpickerdialog_title);
 		//this.getWindow().setBackgroundDrawableResource(R.drawable.canvasnet_background);
 		Button okButton = (Button) mView.findViewById(R.id.ok);
 		// if button is clicked, close the custom dialog
@@ -46,6 +46,18 @@ public class ColorPickerDialog extends Dialog {
 				//((MyCanvas)(mContext)).getSocket().send(new Commands.ChangeColorCmd(mPaint.getColor(),mPaint.getStrokeWidth()/RatioFixer.getRatio()));
 			    if(mColorDecideCallback != null)
 			    	mColorDecideCallback.run(mPaint);
+				ColorPickerDialog.this.dismiss();
+			}
+
+		});
+		
+		Button cancelButton = (Button) mView.findViewById(R.id.cancel);
+		// if button is clicked, close the custom dialog
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
 				ColorPickerDialog.this.dismiss();
 			}
 

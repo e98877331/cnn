@@ -17,6 +17,7 @@
     <string name="mycanvas_menu_loadimage">Load Image</string>
     <string name="mycanvas_menu_checkip">Magic Number</string>
     <string name="mycanvas_menu_save">Save</string>
+    <string name="mycanvas_colorpickerdialog_title">Choose Color and Stroke Width</string>
     <string name="global_ok">OK</string>
     <string name="global_cancel">Cancel</string>
 

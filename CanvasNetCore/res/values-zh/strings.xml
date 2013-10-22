@@ -17,6 +17,7 @@
     <string name="mycanvas_menu_loadimage">讀取圖片</string>
     <string name="mycanvas_menu_checkip">我的連線號碼</string>
     <string name="mycanvas_menu_save">儲存</string>
+    <string name="mycanvas_colorpickerdialog_title">選擇顏色與筆刷大小</string>
     <string name="global_ok">確定</string>
     <string name="global_cancel">放棄</string>
 </resources>
