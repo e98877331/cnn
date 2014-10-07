@@ -19,9 +19,11 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyCanvas extends RatioActivity {
-	  private static final int SELECT_PICTURE = 1;
+	private static final int SELECT_PICTURE = 1;
 	private MyCanvas mSelf;
 	public MySurfaceView mView;
 	private MySocket mMySocket;
@@ -118,7 +120,7 @@ public class MyCanvas extends RatioActivity {
 				RatioFixer.getLayoutParam(153, 130, 612, 0));
 
 		getMainLayout().addView(imgEdtOKBtn,
-				RatioFixer.getLayoutParam(384, 130,0, 1100));
+				RatioFixer.getLayoutParam(384, 130, 0, 1100));
 		getMainLayout().addView(imgEdtCancelBtn,
 				RatioFixer.getLayoutParam(384, 130, 384, 1100));
 
@@ -189,7 +191,7 @@ public class MyCanvas extends RatioActivity {
 			mMySocket.server();
 
 			if (NetworkStatusChecker.checkIfThethering(this)) {
-				
+
 				checkIP();
 			} else {
 
@@ -198,7 +200,7 @@ public class MyCanvas extends RatioActivity {
 				} else {
 					NoWifyAndThetheringView.show(this);
 				}
-				
+
 			}
 
 		} else {
@@ -213,13 +215,13 @@ public class MyCanvas extends RatioActivity {
 			part1 = Integer.toString(Integer.parseInt(part1));
 			String part2 = remoteIP.substring(3);
 			part2 = Integer.toString(Integer.parseInt(part2));
-			
+
 			String[] tt = mMySocket.getIP().split("\\.");
 			if (tt[0].equals("0"))
 				tt[0] = "192";
 			if (tt[1].equals("0"))
 				tt[1] = "168";
-	
+
 			remoteIP = tt[0] + "." + tt[1] + "." + part1 + "." + part2;
 
 			// ChengYan: open a thread for Client connecting to avoid stall.
@@ -458,7 +460,6 @@ public class MyCanvas extends RatioActivity {
 	//
 	// }
 
-
 	public MySocket getSocket() {
 		return mMySocket;
 	}
@@ -466,43 +467,44 @@ public class MyCanvas extends RatioActivity {
 	private void useColorPicker() {
 		// new ColorPickDialog(this , mView.getPaint() ,
 		// mView.getPaint().getColor()).show();
-		
-//		new ColorPickDialog(this, mView.getPaint(), mView.getPaint().getColor())
-//				.show();
-		
-		
-//      ColorPicker picker = new ColorPicker(this);
-//      picker.setBackgroundColor(Color.BLUE);
-//      
-//      SVBar svBar = new SVBar(this);
-//      OpacityBar opacityBar = new OpacityBar(this);
-//      SaturationBar saturationBar = new SaturationBar(this);
-//      ValueBar valueBar = new ValueBar(this);
-		
-		
-//      
-    // ColorPickerView cpv = new ColorPickerView(this,mView.getPaint());
-      
-     // getMainLayout().addView(cpv,RatioFixer.getLayoutParam( 568,1030,100,100));
-     
-     ColorPickerDialog cpd = new ColorPickerDialog(this, mView.getPaint());
-     cpd.setOnColorDecideCallback(new ColorPickerDialog.OnColorDecideCallBack() {
 
-		@Override
-		public void run(Paint pPaint) {
-			// TODO Auto-generated method stub
-			MyCanvas.this.getSocket().send(new Commands.ChangeColorCmd(pPaint.getColor(),pPaint.getStrokeWidth()/RatioFixer.getRatio()));
-		}
-		
+		// new ColorPickDialog(this, mView.getPaint(),
+		// mView.getPaint().getColor())
+		// .show();
 
-	});
-     cpd.show();
-      
+		// ColorPicker picker = new ColorPicker(this);
+		// picker.setBackgroundColor(Color.BLUE);
+		//
+		// SVBar svBar = new SVBar(this);
+		// OpacityBar opacityBar = new OpacityBar(this);
+		// SaturationBar saturationBar = new SaturationBar(this);
+		// ValueBar valueBar = new ValueBar(this);
+
+		//
+		// ColorPickerView cpv = new ColorPickerView(this,mView.getPaint());
+
+		// getMainLayout().addView(cpv,RatioFixer.getLayoutParam(
+		// 568,1030,100,100));
+
+		ColorPickerDialog cpd = new ColorPickerDialog(this, mView.getPaint());
+		cpd.setOnColorDecideCallback(new ColorPickerDialog.OnColorDecideCallBack() {
+
+			@Override
+			public void run(Paint pPaint) {
+				// TODO Auto-generated method stub
+				MyCanvas.this.getSocket().send(
+						new Commands.ChangeColorCmd(pPaint.getColor(), pPaint
+								.getStrokeWidth() / RatioFixer.getRatio()));
+			}
+
+		});
+		cpd.show();
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// °Ñ¼Æ1:¸s²Õid, °Ñ¼Æ2:itemId, °Ñ¼Æ3:item¶¶§Ç, °Ñ¼Æ4:item¦WºÙ
+		// ï¿½Ñ¼ï¿½1:ï¿½sï¿½ï¿½id, ï¿½Ñ¼ï¿½2:itemId, ï¿½Ñ¼ï¿½3:itemï¿½ï¿½ï¿½ï¿½, ï¿½Ñ¼ï¿½4:itemï¿½Wï¿½ï¿½
 		// menu.add(0, 0, 0, "Next Page");
 		// menu.add(0, 1, 1, "Frame Select");
 		menu.add(0, 2, 2, R.string.mycanvas_menu_loadimage);
@@ -513,35 +515,43 @@ public class MyCanvas extends RatioActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// ¨Ì¾ÚitemId¨Ó§PÂ_¨Ï¥ÎªÌÂI¿ï­þ¤@­Óitem
+		// ï¿½Ì¾ï¿½itemIdï¿½Ó§Pï¿½_ï¿½Ï¥Îªï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½@ï¿½ï¿½item
 		switch (item.getItemId()) {
 		case 0:
-			Toast.makeText(getApplicationContext(), "¬I¤u¤¤...",
+			Toast.makeText(getApplicationContext(), "ï¿½Iï¿½uï¿½ï¿½...",
 					Toast.LENGTH_SHORT).show();
 			break;
 		case 1:
-			Toast.makeText(getApplicationContext(), "¬I¤u¤¤...",
+			Toast.makeText(getApplicationContext(), "ï¿½Iï¿½uï¿½ï¿½...",
 					Toast.LENGTH_SHORT).show();
 			break;
 		case 2:
-			  Intent intent = new Intent();
-              intent.setType("image/*");
-              intent.setAction(Intent.ACTION_GET_CONTENT);
-              startActivityForResult(Intent.createChooser(intent,
-                      "Select Picture"), SELECT_PICTURE);
+			Intent intent = new Intent();
+			intent.setType("image/*");
+			intent.setAction(Intent.ACTION_GET_CONTENT);
+			startActivityForResult(
+					Intent.createChooser(intent, "Select Picture"),
+					SELECT_PICTURE);
 			break;
 		case 3:
 
-				checkIP();
+			checkIP();
 			break;
 		case 4:
 			String fileName = mView.mBufferDealer.saveBitmapToMemory(mView
 					.getBitmap());
 
 			mView.errorToast("Save picture to " + fileName + ".jpg");
-			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ mView.mBufferDealer.getSavePath())));
-
+			// sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
+			// Uri.parse("file://"+ mView.mBufferDealer.getSavePath())));
 			
+			MediaScannerConnection.scanFile(this, new String[] {
+					mView.mBufferDealer.getSavePath() +"/"+ fileName +".jpg" },
+			null, new MediaScannerConnection.OnScanCompletedListener() {
+				public void onScanCompleted(String path, Uri uri)
+				{
+				}
+			});
 			break;
 		default:
 		}
@@ -553,28 +563,28 @@ public class MyCanvas extends RatioActivity {
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d("tantofish", "onActivityResult: ±q ImageLoader ¦^¨Ó¤F");
+		Log.d("tantofish", "onActivityResult: ï¿½q ImageLoader ï¿½^ï¿½Ó¤F");
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == 1 && resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
-                String selectedImagePath = getPath(selectedImageUri);
-                mImageEditingView.startEditing(selectedImagePath);
-            }
+			if (requestCode == SELECT_PICTURE) {
+				Uri selectedImageUri = data.getData();
+				String selectedImagePath = getPath(selectedImageUri);
+				mImageEditingView.startEditing(selectedImagePath);
+			}
 
 		}
 	}
 
-    private String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-	
+	private String getPath(Uri uri) {
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		int column_index = cursor
+				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(column_index);
+	}
+
 	public void checkIP(String ip) {
 		LayoutInflater inflater = LayoutInflater.from(MyCanvas.this);
 		final View textEntryView = inflater.inflate(R.layout.dialog, null);
@@ -595,7 +605,6 @@ public class MyCanvas extends RatioActivity {
 
 	}
 
-
 	// IP alert dialog
 	public void checkIP() {
 
@@ -609,10 +618,9 @@ public class MyCanvas extends RatioActivity {
 
 		// ChengYan: cheng ip to Six number
 
-		//String ip = mMySocket.getIP();
-	    String ip = MySocket.getIPAddress(true);
-		
-		
+		// String ip = mMySocket.getIP();
+		String ip = MySocket.getIPAddress(true);
+
 		String[] tempp = ip.split("\\.");
 
 		tempp[2] = ("00" + tempp[2]);
