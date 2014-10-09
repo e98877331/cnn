@@ -1,5 +1,10 @@
 package ntu.csie.wcmlab.canvasnetcore;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import ntu.csie.wcmlab.canvasnetcore.MyApplication.TrackerName;
 import ntu.csie.wcmlab.canvasnetcore.canvasnetactivity.AboutView;
 import wcm.ytwhyc.ratiofixer.RatioActivity;
 import wcm.ytwhyc.ratiofixer.RatioFixer;
@@ -44,6 +49,27 @@ public class CanvasNetFreeActivity extends RatioActivity {
 		
 	}
 
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		Tracker t = ((MyApplication)getApplication()).getTracker(TrackerName.APP_TRACKER);
+		//t.enableAutoActivityTracking(true);
+		//GoogleAnalytics.getInstance(this).reportActivityStart(this);
+		
+            // Set screen name.
+            t.setScreenName("CanvasNetActivity1");
+
+            // Send a screen view.
+            t.send(new HitBuilders.AppViewBuilder().build());
+		
+	}
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+	}
+	
 	private void setContentView() {
 
 		getMainLayout().setBackgroundResource(R.drawable.canvasnet_background);

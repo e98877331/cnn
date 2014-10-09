@@ -2,7 +2,7 @@ package ntu.csie.wcmlab.canvasnetcore;
 
 
 
-import ntu.csie.wcmlab.canvasnetcore.R;
+import ntu.csie.wcmlab.canvasnetcore.MyApplication.TrackerName;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -26,6 +26,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class CanvasNetActivity extends Activity {
 	/** Called when the activity is first created. */
@@ -226,6 +229,26 @@ public class CanvasNetActivity extends Activity {
 
 	}
 	
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		Tracker t = ((MyApplication)getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+		
+            // Set screen name.
+            t.setScreenName("CanvasNetActivity1");
+
+            // Send a screen view.
+            t.send(new HitBuilders.AppViewBuilder().build());
+		
+	}
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+	}
 	
 	// ChengYan: thread for cover animation
 	private void startCoverThread(final Resources res) {
